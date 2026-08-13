@@ -1,11 +1,13 @@
+// ============================================================
+// MAP
+// ============================================================
+
 const map = L.map("map", {
 
-    // --------------------------------------------------------
-    // SINGLE WORLD
-    // --------------------------------------------------------
-
+    // Do not repeat the world horizontally
     worldCopyJump: false,
 
+    // Keep the map inside one world
     maxBounds: [
         [-85, -180],
         [85, 180]
@@ -13,11 +15,7 @@ const map = L.map("map", {
 
     maxBoundsViscosity: 1.0,
 
-
-    // --------------------------------------------------------
-    // SLOWER MOUSE WHEEL ZOOM
-    // --------------------------------------------------------
-
+    // Slower mouse-wheel zoom
     wheelPxPerZoomLevel: 150,
 
     zoomDelta: 0.5,
@@ -54,9 +52,9 @@ L.tileLayer(
 
 const countries = {
 
-    // ========================================================
+    // --------------------------------------------------------
     // AFRICA
-    // ========================================================
+    // --------------------------------------------------------
 
     DZ: {
         name: "Algeria",
@@ -329,9 +327,9 @@ const countries = {
     },
 
 
-    // ========================================================
+    // --------------------------------------------------------
     // ASIA
-    // ========================================================
+    // --------------------------------------------------------
 
     AF: {
         name: "Afghanistan",
@@ -574,9 +572,9 @@ const countries = {
     },
 
 
-    // ========================================================
+    // --------------------------------------------------------
     // EUROPE
-    // ========================================================
+    // --------------------------------------------------------
 
     AL: {
         name: "Albania",
@@ -799,9 +797,9 @@ const countries = {
     },
 
 
-    // ========================================================
+    // --------------------------------------------------------
     // NORTH AMERICA
-    // ========================================================
+    // --------------------------------------------------------
 
     AG: {
         name: "Antigua and Barbuda",
@@ -919,9 +917,9 @@ const countries = {
     },
 
 
-    // ========================================================
+    // --------------------------------------------------------
     // SOUTH AMERICA
-    // ========================================================
+    // --------------------------------------------------------
 
     AR: {
         name: "Argentina",
@@ -984,9 +982,9 @@ const countries = {
     },
 
 
-    // ========================================================
+    // --------------------------------------------------------
     // OCEANIA
-    // ========================================================
+    // --------------------------------------------------------
 
     AU: {
         name: "Australia",
@@ -1062,6 +1060,83 @@ const countries = {
 
 
 // ============================================================
+// COUNTRY PANEL ELEMENTS
+// ============================================================
+
+const countryPanel =
+    document.getElementById("country-panel");
+
+const panelCountryName =
+    document.getElementById("panel-country-name");
+
+const closePanelButton =
+    document.getElementById("close-panel");
+
+const populationTotal =
+    document.getElementById("population-total");
+
+const populationMale =
+    document.getElementById("population-male");
+
+const populationFemale =
+    document.getElementById("population-female");
+
+const birthRate =
+    document.getElementById("birth-rate");
+
+const sexualActivity =
+    document.getElementById("sexual-activity");
+
+
+// ============================================================
+// OPEN COUNTRY PANEL
+// ============================================================
+
+function openCountryPanel(country) {
+
+    panelCountryName.textContent =
+        country.name;
+
+
+    // Placeholder data
+    populationTotal.textContent =
+        "123,456,789";
+
+    populationMale.textContent =
+        "49%";
+
+    populationFemale.textContent =
+        "51%";
+
+    birthRate.textContent =
+        "XX";
+
+    sexualActivity.textContent =
+        "XX";
+
+
+    // Open panel
+    countryPanel.classList.add("open");
+}
+
+
+// ============================================================
+// CLOSE COUNTRY PANEL
+// ============================================================
+
+function closeCountryPanel() {
+
+    countryPanel.classList.remove("open");
+}
+
+
+closePanelButton.addEventListener(
+    "click",
+    closeCountryPanel
+);
+
+
+// ============================================================
 // LOAD COUNTRY GEOJSON
 // ============================================================
 
@@ -1072,9 +1147,11 @@ fetch(
     .then(response => {
 
         if (!response.ok) {
+
             throw new Error(
                 "Failed to load GeoJSON data."
             );
+
         }
 
         return response.json();
@@ -1086,7 +1163,7 @@ fetch(
         L.geoJSON(data, {
 
             // ------------------------------------------------
-            // COUNTRY APPEARANCE
+            // COUNTRY STYLE
             // ------------------------------------------------
 
             style: {
@@ -1097,35 +1174,44 @@ fetch(
 
 
             // ------------------------------------------------
-            // COUNTRY LABELS
+            // COUNTRY EVENTS
             // ------------------------------------------------
 
-            onEachFeature: function (feature, layer) {
+            onEachFeature: function (
+                feature,
+                layer
+            ) {
 
                 const properties =
                     feature.properties;
+
 
                 const countryCode =
                     properties[
                         "ISO3166-1-Alpha-2"
                     ];
 
+
                 const country =
                     countries[countryCode];
 
 
-                // No matching country data
+                // --------------------------------------------
+                // COUNTRY NOT FOUND
+                // --------------------------------------------
+
                 if (!country) {
                     return;
                 }
 
 
-                // ------------------------------------------------
+                // --------------------------------------------
                 // COUNTRY + CAPITAL LABEL
-                // ------------------------------------------------
+                // --------------------------------------------
 
                 const labelHTML = `
                     <div class="country-label">
+
                         <div class="country-name">
                             ${country.name}
                         </div>
@@ -1133,21 +1219,14 @@ fetch(
                         <div class="capital-name">
                             ${country.capital}
                         </div>
+
                     </div>
                 `;
 
 
-                // ------------------------------------------------
-                // FIND COUNTRY CENTER
-                // ------------------------------------------------
-
                 const center =
                     layer.getBounds().getCenter();
 
-
-                // ------------------------------------------------
-                // PERMANENT LABEL
-                // ------------------------------------------------
 
                 L.marker(center, {
 
@@ -1166,6 +1245,52 @@ fetch(
                     interactive: false
 
                 }).addTo(map);
+
+
+                // --------------------------------------------
+                // CLICK COUNTRY
+                // --------------------------------------------
+
+                layer.on(
+                    "click",
+                    function () {
+
+                        openCountryPanel(
+                            country
+                        );
+
+                    }
+                );
+
+
+                // --------------------------------------------
+                // HOVER EFFECT
+                // --------------------------------------------
+
+                layer.on(
+                    "mouseover",
+                    function () {
+
+                        layer.setStyle({
+                            weight: 2,
+                            fillOpacity: 0.4
+                        });
+
+                    }
+                );
+
+
+                layer.on(
+                    "mouseout",
+                    function () {
+
+                        layer.setStyle({
+                            weight: 1,
+                            fillOpacity: 0.25
+                        });
+
+                    }
+                );
 
             }
 

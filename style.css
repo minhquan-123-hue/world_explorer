@@ -1,10 +1,22 @@
+/* ============================================================
+   GLOBAL
+   ============================================================ */
+
 html,
 body {
     margin: 0;
     padding: 0;
+
     width: 100%;
     height: 100%;
+
+    overflow: hidden;
 }
+
+
+/* ============================================================
+   MAP
+   ============================================================ */
 
 #map {
     width: 100%;
@@ -12,23 +24,30 @@ body {
 }
 
 
-/* Country + capital label */
+/* ============================================================
+   COUNTRY LABEL
+   ============================================================ */
 
 .country-label {
     background: transparent;
     border: none;
     box-shadow: none;
+
     padding: 0;
     margin: 0;
+
     text-align: center;
     white-space: nowrap;
+
     pointer-events: none;
 }
 
 .country-name {
     font-size: 12px;
     font-weight: 700;
+
     color: #111;
+
     text-shadow:
         1px 1px 2px white,
         -1px -1px 2px white,
@@ -39,10 +58,239 @@ body {
 .capital-name {
     font-size: 10px;
     font-weight: 400;
+
     color: #444;
+
     text-shadow:
         1px 1px 2px white,
         -1px -1px 2px white,
         1px -1px 2px white,
         -1px 1px 2px white;
+}
+
+
+/* ============================================================
+   COUNTRY PANEL
+   ============================================================ */
+
+.country-panel {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 360px;
+    height: 100vh;
+
+    background: #ffffff;
+
+    z-index: 1000;
+
+    /*
+        Shadow is now on the LEFT side
+        because the panel is on the RIGHT.
+    */
+
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
+
+    /*
+        Hidden outside the right side of the screen.
+    */
+
+    transform: translateX(100%);
+
+    transition: transform 0.25s ease;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ============================================================
+   COUNTRY PANEL OPEN STATE
+   ============================================================ */
+
+.country-panel.open {
+    transform: translateX(0);
+}
+
+
+/* ============================================================
+   PANEL HEADER
+   ============================================================ */
+
+.panel-header {
+    min-height: 64px;
+
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #ddd;
+
+    flex-shrink: 0;
+}
+
+
+/* Country name */
+
+.panel-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #111;
+}
+
+
+/* ============================================================
+   CLOSE BUTTON
+   ============================================================ */
+
+.close-button {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    font-size: 30px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    color: #555;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.close-button:hover {
+    background: #eeeeee;
+
+    color: #111;
+}
+
+
+/* ============================================================
+   PANEL CONTENT
+   ============================================================ */
+
+.panel-content {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 20px;
+}
+
+
+/* ============================================================
+   PANEL SECTION
+   ============================================================ */
+
+.panel-section {
+    margin-bottom: 30px;
+}
+
+.panel-section h3 {
+    margin: 0 0 8px 0;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.section-description {
+    margin: 0 0 10px 0;
+
+    font-size: 14px;
+
+    color: #666;
+}
+
+
+/* ============================================================
+   PERFORMER LIST
+   ============================================================ */
+
+#performers-list {
+    margin: 8px 0 0 0;
+
+    padding-left: 20px;
+
+    color: #333;
+}
+
+#performers-list li {
+    margin-bottom: 6px;
+}
+
+
+/* ============================================================
+   DATA ROW
+   ============================================================ */
+
+.data-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-size: 14px;
+}
+
+.data-row span {
+    color: #555;
+}
+
+.data-row strong {
+    color: #111;
+}
+
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+.panel-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.panel-content::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+    background: #cccccc;
+
+    border-radius: 4px;
+}
+
+.panel-content::-webkit-scrollbar-thumb:hover {
+    background: #aaaaaa;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .country-panel {
+        width: 100%;
+    }
+
 }

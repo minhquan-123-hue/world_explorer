@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Bản đồ thế giới</title>
+    <title>World Map</title>
 
     <link
         rel="stylesheet"
@@ -16,7 +16,100 @@
 
 <body>
 
-    <div id="map"></div>
+    <!-- Country Panel -->
+    <aside id="country-panel" class="country-panel">
+
+        <div class="panel-header">
+            <h2 id="panel-country-name">Country</h2>
+
+            <button
+                id="close-panel"
+                class="close-button"
+                aria-label="Close panel"
+            >
+                ×
+            </button>
+        </div>
+
+
+        <div class="panel-content">
+
+            <!-- Adult Industry -->
+            <section class="panel-section">
+
+                <h3>🔞 Adult Industry</h3>
+
+                <p class="section-description">
+                    Famous adult performers
+                </p>
+
+                <ul id="performers-list">
+                    <li>Placeholder Performer 1</li>
+                    <li>Placeholder Performer 2</li>
+                    <li>Placeholder Performer 3</li>
+                </ul>
+
+            </section>
+
+
+            <!-- Population -->
+            <section class="panel-section">
+
+                <h3>👥 Population</h3>
+
+                <div class="data-row">
+                    <span>Total population</span>
+                    <strong id="population-total">
+                        123,456,789
+                    </strong>
+                </div>
+
+                <div class="data-row">
+                    <span>Male</span>
+                    <strong id="population-male">
+                        49%
+                    </strong>
+                </div>
+
+                <div class="data-row">
+                    <span>Female</span>
+                    <strong id="population-female">
+                        51%
+                    </strong>
+                </div>
+
+            </section>
+
+
+            <!-- Birth & Sexuality -->
+            <section class="panel-section">
+
+                <h3>👶 Birth &amp; Sexuality</h3>
+
+                <div class="data-row">
+                    <span>Birth rate</span>
+                    <strong id="birth-rate">
+                        XX
+                    </strong>
+                </div>
+
+                <div class="data-row">
+                    <span>Sexual activity</span>
+                    <strong id="sexual-activity">
+                        XX
+                    </strong>
+                </div>
+
+            </section>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Map -->
+    <main id="map"></main>
+
 
     <script
         src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
