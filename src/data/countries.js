@@ -1,56 +1,4 @@
-// ============================================================
-// MAP
-// ============================================================
-
-const map = L.map("map", {
-
-    // Do not repeat the world horizontally
-    worldCopyJump: false,
-
-    // Keep the map inside one world
-    maxBounds: [
-        [-85, -180],
-        [85, 180]
-    ],
-
-    maxBoundsViscosity: 1.0,
-
-    // Slower mouse-wheel zoom
-    wheelPxPerZoomLevel: 150,
-
-    zoomDelta: 0.5,
-
-    zoomSnap: 0.5,
-
-    wheelDebounceTime: 80
-
-}).setView([20, 0], 2);
-
-
-// ============================================================
-// MAP TILES
-// ============================================================
-
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        maxZoom: 19,
-
-        noWrap: true,
-
-        attribution: "&copy; OpenStreetMap contributors"
-    }
-).addTo(map);
-
-
-// ============================================================
-// COUNTRY DATA
-//
-// ISO 3166-1 Alpha-2
-// Country name + Capital
-// ============================================================
-
-const countries = {
+export const countries = {
 
     // --------------------------------------------------------
     // AFRICA
@@ -413,7 +361,19 @@ const countries = {
 
     JP: {
         name: "Japan",
-        capital: "Tokyo"
+        capital: "Tokyo",
+
+        population: "123,000,000",
+        male: "48.5%",
+        female: "51.5%",
+        birthRate: "6.0 births / 1,000 people",
+        sexualActivity: "XX",
+
+        performers: [
+            "Placeholder Performer JP 1",
+            "Placeholder Performer JP 2",
+            "Placeholder Performer JP 3"
+        ]
     },
 
     JO: {
@@ -563,7 +523,19 @@ const countries = {
 
     VN: {
         name: "Vietnam",
-        capital: "Hanoi"
+        capital: "Hanoi",
+
+        population: "100,000,000",
+        male: "49.8%",
+        female: "50.2%",
+        birthRate: "15.2 births / 1,000 people",
+        sexualActivity: "XX",
+
+        performers: [
+            "Placeholder Performer VN 1",
+            "Placeholder Performer VN 2",
+            "Placeholder Performer VN 3"
+        ]
     },
 
     YE: {
@@ -913,7 +885,19 @@ const countries = {
 
     US: {
         name: "United States",
-        capital: "Washington, D.C."
+        capital: "Washington, D.C.",
+
+        population: "340,000,000",
+        male: "49.5%",
+        female: "50.5%",
+        birthRate: "11.0 births / 1,000 people",
+        sexualActivity: "XX",
+
+        performers: [
+            "Placeholder Performer US 1",
+            "Placeholder Performer US 2",
+            "Placeholder Performer US 3"
+        ]
     },
 
 
@@ -1057,252 +1041,3 @@ const countries = {
     }
 
 };
-
-
-// ============================================================
-// COUNTRY PANEL ELEMENTS
-// ============================================================
-
-const countryPanel =
-    document.getElementById("country-panel");
-
-const panelCountryName =
-    document.getElementById("panel-country-name");
-
-const closePanelButton =
-    document.getElementById("close-panel");
-
-const populationTotal =
-    document.getElementById("population-total");
-
-const populationMale =
-    document.getElementById("population-male");
-
-const populationFemale =
-    document.getElementById("population-female");
-
-const birthRate =
-    document.getElementById("birth-rate");
-
-const sexualActivity =
-    document.getElementById("sexual-activity");
-
-
-// ============================================================
-// OPEN COUNTRY PANEL
-// ============================================================
-
-function openCountryPanel(country) {
-
-    panelCountryName.textContent =
-        country.name;
-
-
-    // Placeholder data
-    populationTotal.textContent =
-        "123,456,789";
-
-    populationMale.textContent =
-        "49%";
-
-    populationFemale.textContent =
-        "51%";
-
-    birthRate.textContent =
-        "XX";
-
-    sexualActivity.textContent =
-        "XX";
-
-
-    // Open panel
-    countryPanel.classList.add("open");
-}
-
-
-// ============================================================
-// CLOSE COUNTRY PANEL
-// ============================================================
-
-function closeCountryPanel() {
-
-    countryPanel.classList.remove("open");
-}
-
-
-closePanelButton.addEventListener(
-    "click",
-    closeCountryPanel
-);
-
-
-// ============================================================
-// LOAD COUNTRY GEOJSON
-// ============================================================
-
-fetch(
-    "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson"
-)
-
-    .then(response => {
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load GeoJSON data."
-            );
-
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        L.geoJSON(data, {
-
-            // ------------------------------------------------
-            // COUNTRY STYLE
-            // ------------------------------------------------
-
-            style: {
-                color: "#555",
-                weight: 1,
-                fillOpacity: 0.25
-            },
-
-
-            // ------------------------------------------------
-            // COUNTRY EVENTS
-            // ------------------------------------------------
-
-            onEachFeature: function (
-                feature,
-                layer
-            ) {
-
-                const properties =
-                    feature.properties;
-
-
-                const countryCode =
-                    properties[
-                        "ISO3166-1-Alpha-2"
-                    ];
-
-
-                const country =
-                    countries[countryCode];
-
-
-                // --------------------------------------------
-                // COUNTRY NOT FOUND
-                // --------------------------------------------
-
-                if (!country) {
-                    return;
-                }
-
-
-                // --------------------------------------------
-                // COUNTRY + CAPITAL LABEL
-                // --------------------------------------------
-
-                const labelHTML = `
-                    <div class="country-label">
-
-                        <div class="country-name">
-                            ${country.name}
-                        </div>
-
-                        <div class="capital-name">
-                            ${country.capital}
-                        </div>
-
-                    </div>
-                `;
-
-
-                const center =
-                    layer.getBounds().getCenter();
-
-
-                L.marker(center, {
-
-                    icon: L.divIcon({
-
-                        className: "",
-
-                        html: labelHTML,
-
-                        iconSize: null,
-
-                        iconAnchor: [0, 0]
-
-                    }),
-
-                    interactive: false
-
-                }).addTo(map);
-
-
-                // --------------------------------------------
-                // CLICK COUNTRY
-                // --------------------------------------------
-
-                layer.on(
-                    "click",
-                    function () {
-
-                        openCountryPanel(
-                            country
-                        );
-
-                    }
-                );
-
-
-                // --------------------------------------------
-                // HOVER EFFECT
-                // --------------------------------------------
-
-                layer.on(
-                    "mouseover",
-                    function () {
-
-                        layer.setStyle({
-                            weight: 2,
-                            fillOpacity: 0.4
-                        });
-
-                    }
-                );
-
-
-                layer.on(
-                    "mouseout",
-                    function () {
-
-                        layer.setStyle({
-                            weight: 1,
-                            fillOpacity: 0.25
-                        });
-
-                    }
-                );
-
-            }
-
-        }).addTo(map);
-
-    })
-
-    .catch(error => {
-
-        console.error(
-            "Could not load map data:",
-            error
-        );
-
-    });
