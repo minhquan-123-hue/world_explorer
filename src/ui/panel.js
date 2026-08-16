@@ -1,4 +1,4 @@
-import { getPopulationFromWorldBank } from "../services/worldBank.js";
+import { getPopulation } from "../services/populationService.js";
 
 const countryPanel = document.getElementById("country-panel");
 const panelCountryName = document.getElementById("panel-country-name");
@@ -17,45 +17,42 @@ export function initPanel() {
 }
 
 export function openCountryPanel(country, countryCode) {
-
     panelCountryName.textContent = country.name || "Unknown";
 
-    // Immediate UI from local data (if available)
     populationMale.textContent = country.male || "–";
     populationFemale.textContent = country.female || "–";
     birthRate.textContent = country.birthRate || "–";
     sexualActivity.textContent = country.sexualActivity || "–";
 
-    // Performers
     performersList.innerHTML = "";
-    (country.performers || []).forEach(p => {
+    (country.performers || []).forEach(performer => {
         const li = document.createElement("li");
-        li.textContent = p;
+        li.textContent = performer;
         performersList.appendChild(li);
     });
 
-    // Population: optimistic loading from World Bank
-    if (populationTotal) populationTotal.textContent = "Loading...";
+    populationTotal.textContent = "Loading...";
+    countryPanel.classList.add("open");
 
-    // Fetch real population and update
-    if (countryCode) {
-        getPopulationFromWorldBank(countryCode)
-            .then(pop => {
-                if (pop && pop.value != null) {
-                    populationTotal.textContent = new Intl.NumberFormat("en-US").format(pop.value);
-                } else {
-                    // fallback to local bundled value
-                    populationTotal.textContent = country.population || "Data unavailable";
-                }
-            })
-            .catch(() => {
-                populationTotal.textContent = country.population || "Data unavailable";
-            });
-    } else {
-        populationTotal.textContent = country.population || "Data unavailable";
+    if (!countryCode) {
+        populationTotal.textContent = "Data unavailable";
+        return;
     }
 
-    countryPanel.classList.add("open");
+    getPopulation(countryCode)
+        .then(population => {
+            if (!population || population.value == null) {
+                populationTotal.textContent = "Data unavailable";
+                return;
+            }
+
+            populationTotal.textContent =
+                `${new Intl.NumberFormat("en-US").format(population.value)} (${population.year})`;
+        })
+        .catch(error => {
+            console.error("Could not load population:", error);
+            populationTotal.textContent = "Data unavailable";
+        });
 }
 
 export function closeCountryPanel() {
