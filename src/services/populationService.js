@@ -1,4 +1,8 @@
-import { getPopulationFromWorldBank } from "./worldBank.js";
+import {
+    getFertilityRateFromWorldBank,
+    getGenderPopulationFromWorldBank,
+    getPopulationFromWorldBank
+} from "./worldBank.js";
 import { getStoredPopulation, savePopulation } from "./populationStorage.js";
 
 export async function getPopulation(countryCode) {
@@ -14,4 +18,12 @@ export async function getPopulation(countryCode) {
     }
 
     return getStoredPopulation(countryCode);
+}
+
+export async function getGenderPopulation(countryCode) {
+    return getGenderPopulationFromWorldBank(countryCode);
+}
+
+export async function getFertilityRate(countryCode) {
+    return getFertilityRateFromWorldBank(countryCode);
 }

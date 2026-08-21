@@ -1,6 +1,23 @@
 export async function getPopulationFromWorldBank(countryCode) {
+    return getIndicatorFromWorldBank(countryCode, "SP.POP.TOTL");
+}
+
+export async function getGenderPopulationFromWorldBank(countryCode) {
+    const [male, female] = await Promise.all([
+        getIndicatorFromWorldBank(countryCode, "SP.POP.TOTL.MA.IN"),
+        getIndicatorFromWorldBank(countryCode, "SP.POP.TOTL.FE.IN")
+    ]);
+
+    return { male, female };
+}
+
+export async function getFertilityRateFromWorldBank(countryCode) {
+    return getIndicatorFromWorldBank(countryCode, "SP.DYN.TFRT.IN");
+}
+
+async function getIndicatorFromWorldBank(countryCode, indicator) {
     const url =
-        `https://api.worldbank.org/v2/country/${countryCode}/indicator/SP.POP.TOTL?format=json`;
+        `https://api.worldbank.org/v2/country/${countryCode}/indicator/${indicator}?format=json`;
 
     const response = await fetch(url);
 
@@ -25,6 +42,6 @@ export async function getPopulationFromWorldBank(countryCode) {
         value: latestRecord.value,
         year: latestRecord.date,
         source: "World Bank",
-        indicator: "SP.POP.TOTL"
+        indicator
     };
 }
