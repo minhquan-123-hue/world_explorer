@@ -28,47 +28,6 @@ body {
    COUNTRY LABEL
    ============================================================ */
 
-.country-label {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-
-    padding: 0;
-    margin: 0;
-
-    text-align: center;
-    white-space: nowrap;
-
-    pointer-events: none;
-}
-
-.country-name {
-    font-size: 12px;
-    font-weight: 700;
-
-    color: #111;
-
-    text-shadow:
-        1px 1px 2px white,
-        -1px -1px 2px white,
-        1px -1px 2px white,
-        -1px 1px 2px white;
-}
-
-.capital-name {
-    font-size: 10px;
-    font-weight: 400;
-
-    color: #444;
-
-    text-shadow:
-        1px 1px 2px white,
-        -1px -1px 2px white,
-        1px -1px 2px white,
-        -1px 1px 2px white;
-}
-
-
 /* ============================================================
    COUNTRY PANEL
    ============================================================ */

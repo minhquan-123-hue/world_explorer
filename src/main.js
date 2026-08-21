@@ -35,27 +35,6 @@ fetch("https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
                 const country = countries[countryCode];
                 if (!country) return;
 
-                const labelHTML = `
-                    <div class="country-label">
-
-                        <div class="country-name">
-                            ${country.name}
-                        </div>
-
-                        <div class="capital-name">
-                            ${country.capital}
-                        </div>
-
-                    </div>
-                `;
-
-                const center = layer.getBounds().getCenter();
-
-                L.marker(center, {
-                    icon: L.divIcon({ className: "", html: labelHTML, iconSize: null, iconAnchor: [0, 0] }),
-                    interactive: false
-                }).addTo(map);
-
                 layer.on("click", function () {
                     openCountryPanel(country, countryCode);
                 });
