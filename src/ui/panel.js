@@ -17,7 +17,7 @@ export function initPanel() {
 }
 
 export function openCountryPanel(country, countryCode) {
-    panelCountryName.textContent = country.name || "Unknown";
+    panelCountryName.textContent = country.name || "Không xác định";
 
     populationMale.textContent = country.male || "–";
     populationFemale.textContent = country.female || "–";
@@ -31,27 +31,27 @@ export function openCountryPanel(country, countryCode) {
         performersList.appendChild(li);
     });
 
-    populationTotal.textContent = "Loading...";
+    populationTotal.textContent = "Đang tải...";
     countryPanel.classList.add("open");
 
     if (!countryCode) {
-        populationTotal.textContent = "Data unavailable";
+        populationTotal.textContent = "Không có dữ liệu";
         return;
     }
 
     getPopulation(countryCode)
         .then(population => {
             if (!population || population.value == null) {
-                populationTotal.textContent = "Data unavailable";
+                populationTotal.textContent = "Không có dữ liệu";
                 return;
             }
 
             populationTotal.textContent =
-                `${new Intl.NumberFormat("en-US").format(population.value)} (${population.year})`;
+                `${new Intl.NumberFormat("vi-VN").format(population.value)} (${population.year})`;
         })
         .catch(error => {
-            console.error("Could not load population:", error);
-            populationTotal.textContent = "Data unavailable";
+            console.error("Không thể tải dữ liệu dân số:", error);
+            populationTotal.textContent = "Không có dữ liệu";
         });
 }
 

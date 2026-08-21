@@ -366,13 +366,13 @@ export const countries = {
         population: "123,000,000",
         male: "48.5%",
         female: "51.5%",
-        birthRate: "6.0 births / 1,000 people",
+        birthRate: "6,0 ca sinh / 1.000 người",
         sexualActivity: "XX",
 
         performers: [
-            "Placeholder Performer JP 1",
-            "Placeholder Performer JP 2",
-            "Placeholder Performer JP 3"
+            "Người biểu diễn mẫu JP 1",
+            "Người biểu diễn mẫu JP 2",
+            "Người biểu diễn mẫu JP 3"
         ]
     },
 
@@ -528,13 +528,13 @@ export const countries = {
         population: "100,000,000",
         male: "49.8%",
         female: "50.2%",
-        birthRate: "15.2 births / 1,000 people",
+        birthRate: "15,2 ca sinh / 1.000 người",
         sexualActivity: "XX",
 
         performers: [
-            "Placeholder Performer VN 1",
-            "Placeholder Performer VN 2",
-            "Placeholder Performer VN 3"
+            "Người biểu diễn mẫu VN 1",
+            "Người biểu diễn mẫu VN 2",
+            "Người biểu diễn mẫu VN 3"
         ]
     },
 
@@ -890,13 +890,13 @@ export const countries = {
         population: "340,000,000",
         male: "49.5%",
         female: "50.5%",
-        birthRate: "11.0 births / 1,000 people",
+        birthRate: "11,0 ca sinh / 1.000 người",
         sexualActivity: "XX",
 
         performers: [
-            "Placeholder Performer US 1",
-            "Placeholder Performer US 2",
-            "Placeholder Performer US 3"
+            "Người biểu diễn mẫu US 1",
+            "Người biểu diễn mẫu US 2",
+            "Người biểu diễn mẫu US 3"
         ]
     },
 
