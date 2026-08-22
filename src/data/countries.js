@@ -369,11 +369,6 @@ export const countries = {
         birthRate: "6,0 ca sinh / 1.000 người",
         sexualActivity: "XX",
 
-        performers: [
-            "Người biểu diễn mẫu JP 1",
-            "Người biểu diễn mẫu JP 2",
-            "Người biểu diễn mẫu JP 3"
-        ]
     },
 
     JO: {
@@ -531,11 +526,6 @@ export const countries = {
         birthRate: "15,2 ca sinh / 1.000 người",
         sexualActivity: "XX",
 
-        performers: [
-            "Người biểu diễn mẫu VN 1",
-            "Người biểu diễn mẫu VN 2",
-            "Người biểu diễn mẫu VN 3"
-        ]
     },
 
     YE: {
@@ -893,11 +883,6 @@ export const countries = {
         birthRate: "11,0 ca sinh / 1.000 người",
         sexualActivity: "XX",
 
-        performers: [
-            "Người biểu diễn mẫu US 1",
-            "Người biểu diễn mẫu US 2",
-            "Người biểu diễn mẫu US 3"
-        ]
     },
 
 

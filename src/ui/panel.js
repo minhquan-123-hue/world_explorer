@@ -3,6 +3,7 @@ import {
     getGenderPopulation,
     getPopulation
 } from "../services/populationService.js";
+import { performersByCountry } from "../data/performers.js";
 
 const countryPanel = document.getElementById("country-panel");
 const panelCountryName = document.getElementById("panel-country-name");
@@ -45,9 +46,21 @@ export function openCountryPanel(country, countryCode) {
     sexualActivity.textContent = "Đang tính...";
 
     performersList.innerHTML = "";
-    (country.performers || []).forEach(performer => {
+    const performers = performersByCountry[countryCode] || [];
+    if (performers.length === 0) {
+        const emptyMessage = document.createElement("li");
+        emptyMessage.textContent = "Chưa có dữ liệu diễn viên";
+        performersList.appendChild(emptyMessage);
+    }
+
+    performers.forEach(performer => {
         const li = document.createElement("li");
-        li.textContent = performer;
+        const searchLink = document.createElement("a");
+        searchLink.href = `https://www.google.com/search?q=${encodeURIComponent(performer.searchQuery)}`;
+        searchLink.target = "_blank";
+        searchLink.rel = "noopener noreferrer";
+        searchLink.textContent = performer.name;
+        li.appendChild(searchLink);
         performersList.appendChild(li);
     });
 
